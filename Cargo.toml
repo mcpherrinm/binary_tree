@@ -3,7 +3,7 @@ name = "binary_tree"
 version = "0.0.1"
 authors = ["Guillaume Bersac <bersac_1@hotmail.fr>"]
 
-[[lib]]
+[lib]
 name="binary_tree"
 test = true
 plugin = false
