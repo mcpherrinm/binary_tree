@@ -1,12 +1,16 @@
+extern crate core;
+use core::fmt::Show;
+use core::cmp::PartialEq;
+
 //TODO : replace Box by a generic which could be either Ac Nac or Box
-pub struct Node<T: PartialEq + PartialOrd>
+pub struct Node<T: PartialEq + PartialOrd + Show>
 {
     left: Option<Box<Node<T>>>,
     right: Option<Box<Node<T>>>,
     value: Option<Box<T>>,
 }
 
-impl<T: PartialEq + PartialOrd> Node<T>
+impl<T: PartialEq + PartialOrd + Show> Node<T>
 {
 	//???? is it better to pass by reference (&) or by pointer (Ac/box)
 	pub fn new_node(new_value: Box<T>) -> Node<T>
@@ -48,11 +52,43 @@ impl<T: PartialEq + PartialOrd> Node<T>
 		}
 		true
 	}
+
+	/// This function will print the values in the binary by order of appearence
+	/// using depth first algo.
+	pub fn print(&self, s: &mut String)
+	{
+		match self.left {
+			Some(ref x) => {x.print(s)},
+			None => {}
+		};
+		match self.value {
+			Some(ref x) => {
+				if s.as_slice() != ""{
+					s.push_str(" ".to_string().as_slice());
+				}
+				s.push_str(x.to_string().as_slice());
+			},
+			None => {}
+		};
+		match self.right {
+			Some(ref x) => {x.print(s)},
+			None => {}
+		};
+	}
 }
 
 #[test]
 fn node_new()
 {
-	println!("hello");
+	let mut tree = Node::new_node(box 10i);
+	tree.put(box 5i);
+	tree.put(box 15i);
+	tree.put(box 12i);
+	tree.put(box 8i);
+	tree.put(box 1i);
+	tree.put(box 20i);
+	let mut ret_str = "".to_string();
+	tree.print(&mut ret_str);
+	println!("{}", ret_str);
+	assert_eq!(ret_str.as_slice(), "1 5 8 10 12 15 20");
 }
-
