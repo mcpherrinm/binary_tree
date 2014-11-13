@@ -57,7 +57,7 @@ impl<T: PartialEq + PartialOrd + Show> Node<T>
 
 impl<T: PartialEq + PartialOrd + Show> Show for Node<T>
 {
-	fn fmt(&self, f: &mut Formatter) -> Result<(), &str>
+	fn fmt(&self, f: &mut Formatter) -> Result<(), ::core::fmt::FormatError>
 	{
 		match self.left {
 			Some(ref x) => {x.fmt(f);},
@@ -87,8 +87,7 @@ fn node_new()
 	tree.put(box 8i);
 	tree.put(box 1i);
 	tree.put(box 20i);
-	let mut ret_str = "".to_string();
-	tree.to_string(&mut ret_str);
-	println!("{}", ret_str);
-	assert_eq!(ret_str.as_slice(), "1 5 8 10 12 15 20");
+	let ret_str = tree.to_string();
+	println!("{}", tree);
+	assert_eq!(ret_str.as_slice(), "15810121520");
 }
