@@ -57,7 +57,7 @@ impl<T: PartialEq + PartialOrd + Show> Node<T>
 
 impl<T: PartialEq + PartialOrd + Show> Show for Node<T>
 {
-	fn fmt(&self, f: &mut Formatter) -> Result<(), ::core::fmt::FormatError>
+	fn fmt(&self, f: &mut Formatter) -> Result<(), fmt::FormatError>
 	{
 		match self.left {
 			Some(ref x) => {x.fmt(f);},
